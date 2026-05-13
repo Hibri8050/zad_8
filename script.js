@@ -3,7 +3,10 @@ const toggleBtn = document.getElementById('toggleBtn');
 const projectsSection = document.getElementById('projects-section');
 
 themeBtn.addEventListener('click', () => {
-    if (!document.body.classList.contains('green-theme') && !document.body.classList.contains('red-theme')) {
+    if (
+        !document.body.classList.contains('green-theme') &&
+        !document.body.classList.contains('red-theme')
+    ) {
         document.body.classList.add('green-theme');
     } else if (document.body.classList.contains('green-theme')) {
         document.body.classList.remove('green-theme');
@@ -20,29 +23,54 @@ toggleBtn.addEventListener('click', () => {
 const contactForm = document.getElementById('contactForm');
 const validationMessage = document.getElementById('validationMessage');
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
-    const name = document.getElementById('userName').value;
-    const surname = document.getElementById('userSurname').value;
-    const email = document.getElementById('userEmail').value;
+
+    const name = document.getElementById('userName').value.trim();
+    const surname = document.getElementById('userSurname').value.trim();
+    const email = document.getElementById('userEmail').value.trim();
+    const message = document.getElementById('userMessage').value.trim();
+
     const hasDigits = /\d/;
 
     if (hasDigits.test(name) || hasDigits.test(surname)) {
-        validationMessage.innerText = "Błąd: Imię i nazwisko nie mogą zawierać cyfr!";
+        validationMessage.innerText =
+            "Błąd: Imię i nazwisko nie mogą zawierać cyfr!";
         validationMessage.style.color = "red";
         return;
     }
 
     if (!email.includes('@')) {
-        validationMessage.innerText = "Błąd: Wprowadź poprawny adres e-mail!";
+        validationMessage.innerText =
+            "Błąd: Wprowadź poprawny adres e-mail!";
         validationMessage.style.color = "red";
         return;
     }
 
-    validationMessage.innerText = "Formularz został wysłany pomyślnie!";
-    validationMessage.style.color = "green";
-    contactForm.reset();
+    try {
+        const response = await fetch('/save-form', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                surname,
+                email,
+                message
+            })
+        });
+
+        const result = await response.json();
+
+        validationMessage.innerText = result.message;
+        validationMessage.style.color = "green";
+        contactForm.reset();
+
+    } catch (error) {
+        validationMessage.innerText = "Błąd połączenia z serwerem!";
+        validationMessage.style.color = "red";
+    }
 });
 
 async function loadData() {
@@ -55,27 +83,28 @@ async function loadData() {
 
         if (skillsList) {
             skillsList.innerHTML = "";
-            data.skills.forEach(s => {
+            data.skills.forEach(skill => {
                 const li = document.createElement('li');
-                li.textContent = s;
+                li.textContent = skill;
                 skillsList.appendChild(li);
             });
         }
 
         if (projectsList) {
             projectsList.innerHTML = "";
-            data.projects.forEach(p => {
+            data.projects.forEach(project => {
                 const li = document.createElement('li');
-                li.textContent = p;
+                li.textContent = project;
                 projectsList.appendChild(li);
             });
         }
-    } catch (err) {
-        console.log("Status: Oczekiwanie na plik JSON (Uruchom przez Live Server)");
+    } catch (error) {
+        console.log("Uruchom projekt przez localhost lub Live Server");
     }
 }
 
 loadData();
+
 const noteInput = document.getElementById('noteInput');
 const addNoteBtn = document.getElementById('addNoteBtn');
 const notesList = document.getElementById('notesList');
