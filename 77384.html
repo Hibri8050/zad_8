@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>CV - Dmytro Datsenko</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="controls">
+    <button id="themeButton">Zmień motyw</button>
+    <button id="toggleBtn">Pokaż/Ukryj Projekty</button>
+</div>
+
+<header>
+    <h1>Dmytro Datsenko</h1>
+    <img src="foto.jpg" alt="Moje zdjęcie" id="profile-img">
+</header>
+
+<main>
+    <section>
+        <h2>Kontakt</h2>
+        <p>Email: <a href="mailto:ddatsen1@stu.vistula.edu.pl">ddatsen1@stu.vistula.edu.pl</a></p>
+        <p>Telefon: <a href="tel:+48883906359">+48883906359</a></p>
+        <p>Miasto: Warszawa</p>
+        <p><a href="https://github.com/Hibri8050" target="_blank">GitHub</a></p>
+    </section>
+
+    <section>
+        <h2>O mnie</h2>
+        <p>Jestem studentem pierwszego roku na uczelni Vistula w Warszawie. Uczę się programowania i w przyszłości chcę zostać programistą AI.</p>
+    </section>
+
+    <section>
+        <h2>Umiejętności</h2>
+        <ul id="skills-list">
+            <!-- Dane zostaną wczytane z JSON -->
+            <li>HTML</li>
+            <li>SQL</li>
+            <li>C#</li>
+            <li>Matematyka</li>
+            <li>Elektronika</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Doświadczenie</h2>
+        <article>
+            <h3>Brak doświadczenia zawodowego</h3>
+            <p>To mój pierwszy projekt związany z tworzeniem stron internetowych.</p>
+        </article>
+    </section>
+
+    <section id="projects-section">
+        <h2>Projekty</h2>
+        <ul id="projects-list">
+            <!-- Dane zostaną вczytane z JSON -->
+            <li>Bankomat (projekt)</li>
+            <li>Automat vendingowy (projekt)</li>
+        </ul>
+    </section>
+
+    <section id="contact-form-section">
+        <h2>Formularz Kontaktowy</h2>
+        <form id="contactForm">
+            <input type="text" id="userName" placeholder="Imię" required>
+            <input type="text" id="userSurname" placeholder="Nazwisko" required>
+            <input type="email" id="userEmail" placeholder="Email" required>
+            <textarea id="userMessage" placeholder="Wiadomość" required></textarea>
+            <button type="submit">Wyślij</button>
+        </form>
+        <div id="validationMessage"></div>
+    </section>
+</main>
+<section id="notes-section">
+    <h2>Moje notatki</h2>
+
+    <input type="text" id="noteInput" placeholder="Dodaj nową notatkę">
+    <button id="addNoteBtn">Dodaj</button>
+
+    <ul id="notesList"></ul>
+</section>
+<footer>
+    <p>© 2026 </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
