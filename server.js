@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const PORT = 3000;
@@ -8,6 +9,10 @@ const PORT = 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '77384.html'));
+});
 
 app.post('/save-form', (req, res) => {
     const formData = req.body;
